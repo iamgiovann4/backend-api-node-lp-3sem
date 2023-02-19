@@ -1,13 +1,20 @@
 const mysql = require('mysql')
 const courseModel = require('../models/courseModel')
-const courseController = {}
+const courseController = {} // Este código define um objeto courseController, que contém duas funções: listAllCourses e createCourse. O courseController usa o módulo courseModel que é um modelo de banco de dados para a tabela cursos.
 
 courseController.listAllCourses = (req, res) => {
-  courseModel.listAllCourses(req, res)
-}
+  courseModel.listAllCourses((error, result) => {
+    if (error)
+      res.status(500).json({ message: "Erro no Banco de Dados" })
+    if (result)
+      res.json(result)
+  })
+}// A função listAllCourses usa a função listAllCourses do courseModel para obter todos os cursos do banco de dados.Se houver um erro no banco de dados, a função envia uma resposta de erro com um status de código 500 e uma mensagem de erro JSON. Se a consulta for bem sucedida, a função envia uma resposta JSON contendo o resultado da consulta.
 
 courseController.createCourse = (req, res) => {
-  res.json({ message: "Entrou na rota /course com POST!" })
-}
+  courseModel.createCourse(req, res)
+}// A função createCourse chama a função createCourse do courseModel e passa os parâmetros req e res para essa função.Isso permite que a função createCourse do courseModel tenha acesso aos parâmetros da solicitação HTTP e a capacidade de enviar uma resposta HTTP de volta para o cliente.
 
-module.exports = courseController
+module.exports = courseController// O comando module.exports = courseController exporta o objeto courseController para que possa ser usado em outros arquivos como um módulo. Isso permite que outros arquivos acessem as funções do courseController para manipular cursos no banco de dados.
+
+
