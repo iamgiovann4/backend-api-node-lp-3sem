@@ -12,8 +12,7 @@ courseController.listAllCourses = (req, res) => {
 }
 
 courseController.createCourse = (req, res) => {
-  const course = req.body
-  //TODO Verificar se os dados são válidos
+  const course = req.body 
 
   courseModel.createCourse(course, (error, result) => {
     if (error)
@@ -34,8 +33,24 @@ courseController.deleteCourse = (req, res) => {
       res.json({ message: "Curso Deletado com sucesso!" })
   })
 }
+
+courseController.updateCourse = (req, res) => {
+  const course = req.body
+  //TODO Verificar se os dados são válidos
+
+  courseModel.updateCourse(course, (error, result) => {
+    if (error)
+      res.status(500).json({ message: "Erro no Banco de Dados" })
+    if (result)
+      res.json({ message: "Curso Editado com sucesso!" })
+  })
+}
+
 module.exports = courseController
 
+
+//req.body contém os dados que foram enviados do cliente para o servidor. Esses dados podem ser acessados pelo servidor para processamento adicional, como armazenamento em banco de dados ou processamento de negócios.
+  //TODO Verificar se os dados são válidos
 
 // Este código define um objeto courseController, que contém duas funções: listAllCourses e createCourse. O courseController usa o módulo courseModel que é um modelo de banco de dados para a tabela cursos.
 
