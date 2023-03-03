@@ -1,13 +1,12 @@
-//criando rotas
 const express = require('express')
 const router = express.Router()
+const userController = require('../controllers/userCoutroller')
 
-router.get('/', (req, res) => {
-  res.json({message: "Entrou na rota /user com GET!"})
-})
+const { listAllUser, createUser, deleteUser, updateUser } = userController
 
-router.post('/', (req, res) => {
-  res.json({ message: "Entrou na rota /user com POST!"})
-})
+router.get('/', listAllUser);
+router.post('/', createUser);
+router.delete('/', deleteUser);
+router.put('/', updateUser);
 
-module.exports = router
+module.exports = router;
