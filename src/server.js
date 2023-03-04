@@ -1,16 +1,16 @@
-import express from 'express' // O módulo express é importado.
+import express from 'express'
 import courseRoutes from './routes/courseRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 
 const app = express()
-const port = 3100 //Criação de uma porta Web.
+const port = 3100
 
 app.use(express.json())
 
 //TODO: Tratar erro de json inválido
 
 app.use('/course', courseRoutes)
-app.use('/user', userRoutes) //mesma coisa aqui.
+app.use('/user', userRoutes)
 
 
 app.all('*', (req, res) => {

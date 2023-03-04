@@ -1,4 +1,3 @@
-//criando rotas
 import express from 'express'
 import {
   listAllCourses,
@@ -9,9 +8,9 @@ import {
 
 const router = express.Router()
 
-router.get('/', listAllCourses); // SELECT
-router.post('/', createCourse); // INSERT
-router.delete('/', deleteCourse); // DELETE
-router.put('/', updateCourse); // UPDATE
+router.get('/', listAllCourses) // SELECT
+router.post('/', createCourse) // INSERT
+router.delete('/', deleteCourse) // DELETE
+router.put('/', updateCourse) // UPDATE
 
 export default router

@@ -1,14 +1,14 @@
 import express from 'express'
 import {
-  listAllUser,
+  listAllUsers,
   createUser,
   deleteUser,
   updateUser
-} from '../controllers/courseCoutroller.js'
+} from '../controllers/userCoutroller.js'
 
 const router = express.Router()
 
-router.get('/', listAllUser);
+router.get('/', listAllUsers);
 router.post('/', createUser);
 router.delete('/', deleteUser);
 router.put('/', updateUser);

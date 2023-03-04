@@ -1,7 +1,7 @@
-import userModel from '../models/userModel'
+import userModel from '../models/userModel.js'
 
-export const listAllUser = (req, res) => {
-  userModel.listAllUser((error, result) => {
+export const listAllUsers = (req, res) => {
+  userModel.listAllUsers((error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result)
@@ -14,7 +14,6 @@ export const createUser = (req, res) => {
   userModel.createUser(user, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-
     if (result)
       res.json({ message: "Usuario Cadastrado!" })
   })
