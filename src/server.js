@@ -1,6 +1,7 @@
 import express from 'express'
 import courseRoutes from './routes/courseRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import idRoutes from './routes/idRoutes.js'
 
 const app = express()
 const port = 3100
@@ -11,6 +12,7 @@ app.use(express.json())
 
 app.use('/course', courseRoutes)
 app.use('/user', userRoutes)
+app.use('/id', idRoutes)
 
 
 app.all('*', (req, res) => {

@@ -30,7 +30,7 @@ export const createUser = (user, callback) => {
 }
 
 export const deleteUser = (user, callback) => {
-  const { id } = user
+  const id  = user
   const sql = 'DELETE FROM usuarios WHERE id = ?;'
   const values = [id]
 
