@@ -2,9 +2,11 @@ import express from 'express'
 import courseRoutes from './routes/courseRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import idRoutes from './routes/idRoutes.js'
+import { SERVER } from './config.js'
 
 const app = express()
-const port = 3100
+const port = SERVER.PORT
+const host = "localhost"
 
 app.use(express.json())
 
@@ -21,5 +23,5 @@ app.all('*', (req, res) => {
 
 // Inicia o servidor
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port http://www.${host}:${port}`)
 })
