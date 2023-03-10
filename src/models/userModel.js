@@ -12,6 +12,21 @@ export const listAllUsers = (callback) => {
   })
 }
 
+export const listId = (idUser, callback) => {
+  const values = idUser
+  const sql = "SELECT * FROM usuarios WHERE id = '?';"
+  con.query(sql, values, (err, result) => {
+    if (err) {
+      callback(err, null) //a funcao callback é obg a passar 2 parametros
+      console.log(`DB Error: ${err.sqlMessage}`)
+    } else if (result.length === 0) {
+      result.message = "Id não encontrado"
+    } else {
+      callback(null, result)
+    }
+  })
+}
+
 export const createUser = (user, callback) => {
   const { nome, age, office } = user
   // const sql = 'INSERT INTO cursos SET ?;'

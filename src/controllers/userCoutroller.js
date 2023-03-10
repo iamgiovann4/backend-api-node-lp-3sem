@@ -9,6 +9,16 @@ export const listAllUsers = (req, res) => {
   })
 }
 
+export const listId = (req, res) => {
+  const idUser = req.body.id
+  userModel.listId(idUser, (error, result) => {
+    if (error)
+      res.status(500).json({ message: "Erro no Banco de Dados" })
+    if (result)
+      res.json(result)
+  })
+}
+
 export const createUser = (req, res) => {
   const user = req.body
   userModel.createUser(user, (error, result) => {

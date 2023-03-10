@@ -12,6 +12,21 @@ export const listAllCourses = (callback) => {
   })
 }
 
+export const listId = (idCourse, callback) => {
+  const values = idCourse
+  const sql = "SELECT * FROM cursos WHERE id = ?;"
+  con.query(sql, values, (err, result) => {
+    if (err) {
+      callback(err, null) //a funcao callback é obg a passar 2 parametros
+      console.log(`DB Error: ${err.sqlMessage}`)
+    }else if (result.length === 0){
+      result.message = "Id não encontrado"
+    }else {
+      callback(null, result)
+    }
+  })
+}
+
 export const createCourse = (course, callback) => {
   const { nome, cargahoraria } = course
   // const sql = 'INSERT INTO cursos SET ?;'
@@ -58,4 +73,4 @@ export const updateCourse = (course, callback) => {
   })
 }
 
-export default { listAllCourses, createCourse, deleteCourse, updateCourse }
+export default { listAllCourses, listId, createCourse, deleteCourse, updateCourse }

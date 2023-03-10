@@ -1,6 +1,7 @@
 import express from 'express'
 import {
   listAllUsers,
+  listId,
   createUser,
   deleteUser,
   updateUser
@@ -9,6 +10,7 @@ import {
 const router = express.Router()
 
 router.get('/', listAllUsers);
+router.get('/', listId);
 router.post('/', createUser);
 router.delete('/', deleteUser);
 router.put('/', updateUser);

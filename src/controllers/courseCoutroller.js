@@ -9,6 +9,17 @@ export const listAllCourses = (req, res) => {
   })
 }
 
+export const listId = (req, res) => {
+  const idCourse = req.params.id
+  courseModel.listId(idCourse, (error, result) => {
+    if (error)
+      console.log(error)
+      res.status(500).json({ message: "Erro no Banco de Dados" })
+    if (result)
+      res.json(result)
+  })
+}
+
 export const createCourse = (req, res) => {
   const course = req.body
   //TODO Verificar se os dados são válidos
