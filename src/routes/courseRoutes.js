@@ -1,8 +1,8 @@
 import express from 'express'
 import {
   listAllCourses,
-  createCourse,
   listId,
+  createCourse,
   deleteCourse,
   updateCourse
 } from '../controllers/courseCoutroller.js'

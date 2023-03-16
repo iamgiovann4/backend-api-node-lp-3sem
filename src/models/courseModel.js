@@ -12,9 +12,9 @@ export const listAllCourses = (callback) => {
   })
 }
 
-export const listId = (idCourse, callback) => {
-  const values = idCourse
+export const listId = (id, callback) => {
   const sql = "SELECT * FROM cursos WHERE id = ?;"
+  const values = [id]
   con.query(sql, values, (err, result) => {
     if (err) {
       callback(err, null) //a funcao callback é obg a passar 2 parametros
