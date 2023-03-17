@@ -13,8 +13,8 @@ export const listAllUsers = (callback) => {
 }
 
 export const listId = (idUser, callback) => {
-  const values = idUser
-  const sql = "SELECT * FROM usuarios WHERE id = '?';"
+  const sql = "SELECT * FROM usuarios WHERE id = ?;"
+  const values = [idUser]
   con.query(sql, values, (err, result) => {
     if (err) {
       callback(err, null) //a funcao callback é obg a passar 2 parametros
@@ -44,8 +44,8 @@ export const createUser = (user, callback) => {
   })
 }
 
-export const deleteUser = (user, callback) => {
-  const id  = user
+export const deleteUser = (id, callback) => {
+  // const id  = user
   const sql = 'DELETE FROM usuarios WHERE id = ?;'
   const values = [id]
 
@@ -74,4 +74,4 @@ export const updateUser = (user, callback) => {
   })
 }
 
-export default { listAllUsers, createUser, deleteUser, updateUser }
+export default { listAllUsers, listId, createUser, deleteUser, updateUser }

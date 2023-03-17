@@ -14,7 +14,6 @@ export const listId = (req, res) => {
   courseModel.listId(id, (error, result) => {
     if (error) 
       res.status(500).json({ message: "Erro no Banco de Dados" })
-      // console.log(error)
     if (result)
       res.json(result)
   })
@@ -40,6 +39,18 @@ export const deleteCourse = (req, res) => {
     if (result)
       //TODO Verificar se ao menos uma linha foi removida!
       res.json({ message: "Curso Deletado com sucesso!" })
+  })
+}
+
+export const deleteId = (req, res) => {
+  const { id } = req.params
+  //TODO Verificar se os dados são válidos
+  courseModel.deleteCourse(id, (error, result) => {
+    if (error)
+      res.status(500).json({ message: "Erro no Banco de Dados" })
+    if (result)
+      //TODO Verificar se ao menos uma linha foi removida!
+      res.json({ message: "Curso deletado com sucesso!"})
   })
 }
 

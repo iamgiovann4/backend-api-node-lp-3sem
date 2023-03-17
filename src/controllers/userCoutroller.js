@@ -10,10 +10,11 @@ export const listAllUsers = (req, res) => {
 }
 
 export const listId = (req, res) => {
-  const idUser = req.body.id
+  const idUser = req.params.id
   userModel.listId(idUser, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
+    // console.log(error)
     if (result)
       res.json(result)
   })
@@ -31,6 +32,17 @@ export const createUser = (req, res) => {
 
 export const deleteUser = (req, res) => {
   const { id } = req.body
+  //TODO Verificar se os dados são válidos
+  userModel.deleteUser(id, (error, result) => {
+    if (error)
+      res.status(500).json({ message: "Erro no Banco de Dados" })
+    if (result)
+      res.json({ message: "Usuario Deletado com sucesso!" })
+  })
+}
+
+export const deleteId = (req, res) => {
+  const { id } = req.params
   //TODO Verificar se os dados são válidos
   userModel.deleteUser(id, (error, result) => {
     if (error)
