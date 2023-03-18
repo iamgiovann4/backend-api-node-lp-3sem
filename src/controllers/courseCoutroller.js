@@ -4,8 +4,12 @@ export const listAllCourses = (req, res) => {
   courseModel.listAllCourses((error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result)
-      res.json(result)
+    if (result.length){
+      res.json(result[0])
+    } else{
+      res.json({ message: "Nenhum curso cadastrado!" })
+    }
+ 
   })
 }
 

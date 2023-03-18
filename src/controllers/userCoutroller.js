@@ -4,8 +4,14 @@ export const listAllUsers = (req, res) => {
   userModel.listAllUsers((error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result)
-      res.json(result)
+    if (result){
+      if (result.length){
+        res.json(result[0])
+      } else{
+        res.json({ message: "Nenhum usuário cadastrado!"})
+      }
+    }
+     
   })
 }
 
@@ -14,7 +20,6 @@ export const listId = (req, res) => {
   userModel.listId(idUser, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    // console.log(error)
     if (result)
       res.json(result)
   })
@@ -25,8 +30,15 @@ export const createUser = (req, res) => {
   userModel.createUser(user, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result)
-      res.json({ message: "Usuario Cadastrado!" })
+    if (result){
+      res.json({ 
+        message: "Usuario Cadastrado!",
+        user: {
+          id: result.insertId,
+          ...user
+        }
+      })
+    }
   })
 }
 
@@ -36,8 +48,13 @@ export const deleteUser = (req, res) => {
   userModel.deleteUser(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result)
-      res.json({ message: "Usuario Deletado com sucesso!" })
+    if (result){
+      if (result.affectedRows){
+        res.json({ message: "Usuario Deletado com sucesso!" })
+      } else{
+        res.status(404).json({ message: `Usuário ${id} não encontrado!`})
+      }
+    }
   })
 }
 
@@ -47,8 +64,13 @@ export const deleteId = (req, res) => {
   userModel.deleteUser(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result)
-      res.json({ message: "Usuario Deletado com sucesso!" })
+    if (result) {
+      if (result.affectedRows) {
+        res.json({ message: "Usuario Deletado com sucesso!" })
+      } else {
+        res.status(404).json({ message: `Usuário ${id} não encontrado!` })
+      }
+    }
   })
 }
 
@@ -58,7 +80,12 @@ export const updateUser = (req, res) => {
   userModel.updateUser(user, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result)
-      res.json({ message: "Usuario Editado com sucesso!" })
+    if (result) {
+      if (result.affectedRows) {
+        res.json({ message: "Usuario Atualizado com sucesso!" })
+      } else {
+        res.status(404).json({ message: `Usuário ${user.id} não encontrado!` })
+      }
+    }
   })
 }
