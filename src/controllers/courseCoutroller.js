@@ -5,7 +5,7 @@ export const listAllCourses = (req, res) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result.length){
-      res.json(result[0])
+      res.json(result)
     } else{
       res.json({ message: "Nenhum curso cadastrado!" })
     }
@@ -16,10 +16,15 @@ export const listAllCourses = (req, res) => {
 export const listId = (req, res) => {
   const id = req.params.id
   courseModel.listId(id, (error, result) => {
-    if (error) 
+    if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result)
-      res.json(result)
+    if (result) {
+      if (result.length) {
+        res.json(result[0])
+      } else {
+        res.status(404).json({ message: `Curso ${id} não encontrado!` })
+      }
+    }
   })
 }
 
