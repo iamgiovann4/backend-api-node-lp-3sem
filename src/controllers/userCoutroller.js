@@ -32,19 +32,33 @@ export const listId = (req, res) => {
 
 export const createUser = (req, res) => {
   const user = req.body
-  userModel.createUser(user, (error, result) => {
-    if (error)
-      res.status(500).json({ message: "Erro no Banco de Dados" })
-    if (result){
-      res.json({ 
-        message: "Usuario Cadastrado!",
-        user: {
-          id: result.insertId,
-          ...user
-        }
-      })
+  try {
+    userModel.validateUser(user)
+    userModel.createUser(user, (error, result) => {
+      if (error)
+        res.status(500).json({ message: "Erro no Banco de Dados" })
+      if (result) {
+        res.json({
+          message: "Usuário Cadastrado!",
+          user: {
+            id: result.insertId,
+            ...user
+          }
+        })
+      }
+    })
+  } catch (error) {
+    const formatted = error.format();
+    delete formatted._errors
+    const fields = {}
+    for (let field in formatted) {
+      fields[field] = { messages: formatted[field]._errors }
     }
-  })
+    res.status(400).json({
+      message: 'Dados inválidos',
+      fields: fields
+    })
+  }
 }
 
 export const deleteUser = (req, res) => {

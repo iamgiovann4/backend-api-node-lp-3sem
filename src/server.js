@@ -1,9 +1,9 @@
 import express from 'express'
 import courseRoutes from './routes/courseRoutes.js'
 import userRoutes from './routes/userRoutes.js'
-import { SERVER } from './config.js'
 import errorHandler from './middlewares/errorHandler.js'
 import logger from './middlewares/logger.js'
+import { SERVER } from './config.js'
 
 const app = express()
 const port = SERVER.PORT
