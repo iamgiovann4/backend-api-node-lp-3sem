@@ -26,3 +26,5 @@ app.use(errorHandler)
 app.listen(port, () => {
   console.log(`Example app listening on port http://www.${host}:${port}`)
 })
+
+console.log((new Date()).toLocaleDateString('pt-BR'))
