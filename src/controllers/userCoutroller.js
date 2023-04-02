@@ -41,6 +41,7 @@ export const createUser = (req, res) => {
     })
     return
   }
+  
   const userValidated = validUser.data
 
   //TODO validar se o email já existe no banco antes de cadastrar

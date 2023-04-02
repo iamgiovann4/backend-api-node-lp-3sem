@@ -1,27 +1,43 @@
 import con from '../db/dbConnection.js'
 import { z } from 'zod'
 
+//TODO Testar regex com zod e ChatGPT
+
 const userSchema = z.object({
   id: 
     z.number({message: "ID deve ser um valor numérico."}).optional(),
-  nome: z.string({message: "Nome deve ser uma string."})
-    .min(3, { message: "Nome deve ter no mínimo 3 caracteres." }).max(50, { message: "Nome deve ter no máximo 100 caracteres." }),
+  nome: 
+    z.string({
+      required_error: "Nome é obrigatório.",
+      invalid_type_error: "Nome deve ser uma string."
+    })
+      .min(3, { message: "Nome deve ter no mínimo 3 caracteres." })
+      .max(50, { message: "Nome deve ter no máximo 100 caracteres." }),
   email:
-    z.string({ message: "Email deve ser uma string."})
+    z.string({ 
+      required_error: "Email é obrigatório.",
+      invalid_type_error: "Email deve ser uma string."
+    })
       .email({ message: "Email Inválido" })
       .min(5, { message: "O email deve ter ao menos 5 Caracteres" })
       .max(50, {message: "Email deve ter no máximo 200 caracteres."}),
   senha: 
-    z.string({message: "Senha deve ser uma string."})
-    .min(3, {message: "Senha deve ter no mínimo 6 caracteres"})
-    .max(50, {message: "Senha deve ter no máximo 256 caracteres."}),
+    z.string({
+      required_error: "Senha é obrigatório.",
+      invalid_type_error: "Senha deve ser uma string."
+    })
+      .min(6, {message: "Senha deve ter no mínimo 6 caracteres"})
+      .max(256, {message: "Senha deve ter no máximo 256 caracteres."}),
   avatar: 
-    z.string({message: "Avatar deve ser  uma string."})
-    .url({message: "Avatar deve ser uma URL válida."})
+    z.string({
+      required_error: "Avatar é obrigatório.",
+      invalid_type_error: "Avatar deve ser uma string."
+    })
+      .url({message: "Avatar deve ser uma URL válida."})
 })
 
 export const validateUser = (user) => {
-  return userSchema.parse(user)
+  return userSchema.safeParse(user)
 }
 
 export const listAllUsers = (callback) => {
