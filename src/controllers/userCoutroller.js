@@ -1,5 +1,5 @@
 import userModel from '../models/userModel.js'
-import zodErrorFormat from '../helper/zodErrorFormat.js'
+import zodErrorFormat from '../helper/zoadErrorFormat.js'
 
 export const listAllUsers = (req, res) => {
   userModel.listAllUsers((error, result) => {

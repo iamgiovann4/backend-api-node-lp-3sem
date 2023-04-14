@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import courseRoutes from './routes/courseRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import errorHandler from './middlewares/errorHandler.js'
@@ -10,6 +11,7 @@ const port = SERVER.PORT
 const host = "localhost" //pra usar no console.log do app.listen
 
 app.use(logger)
+app.use(cors())
 app.use(express.json())
 //app.use(express.urlencoded({ extended: false })) // get form data urlenconded
 
