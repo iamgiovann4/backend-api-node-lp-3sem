@@ -13,27 +13,20 @@ const userSchema = z.object({
     })
       .min(3, { message: "Nome deve ter no mínimo 3 caracteres." })
       .max(50, { message: "Nome deve ter no máximo 100 caracteres." }),
-  email:
+  age:
     z.string({ 
-      required_error: "Email é obrigatório.",
-      invalid_type_error: "Email deve ser uma string."
+      required_error: "Idade é obrigatório.",
+      invalid_type_error: "Idade deve ser um número"
     })
-      .email({ message: "Email Inválido" })
-      .min(5, { message: "O email deve ter ao menos 5 Caracteres" })
-      .max(50, {message: "Email deve ter no máximo 200 caracteres."}),
-  senha: 
+      .min(1, { message: "Idade deve ter no mínimo 1 caracteres" })
+      .max(2, { message: "Idade deve ter no máximo 2 caracteres." }),
+  office: 
     z.string({
-      required_error: "Senha é obrigatório.",
-      invalid_type_error: "Senha deve ser uma string."
+      required_error: "Profissão é obrigatório.",
+      invalid_type_error: "Profissão deve ser uma string."
     })
-      .min(6, {message: "Senha deve ter no mínimo 6 caracteres"})
-      .max(256, {message: "Senha deve ter no máximo 256 caracteres."}),
-  avatar: 
-    z.string({
-      required_error: "Avatar é obrigatório.",
-      invalid_type_error: "Avatar deve ser uma string."
-    })
-      .url({message: "Avatar deve ser uma URL válida."})
+      .min(6, { message: "Profissão deve ter no mínimo 6 caracteres"})
+      .max(256, { message: "Profissão deve ter no máximo 256 caracteres."})
 })
 
 export const validateUser = (user) => {
