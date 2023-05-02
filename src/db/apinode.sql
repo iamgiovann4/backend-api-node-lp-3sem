@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17-Mar-2023 às 19:18
+-- Tempo de geração: 02-Maio-2023 às 22:25
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 8.0.13
 
@@ -69,7 +69,7 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id`, `nome`, `age`, `office`) VALUES
 (1, 'Giovanna', 19, 'Programadora'),
 (2, 'Vítor', 19, 'Vendedor'),
-(4, 'João', 22, 'Empresário'),
+(4, 'João', 25, 'Empresario'),
 (6, 'Joice', 25, 'Empresária'),
 (7, 'Moisés', 30, 'Gerente'),
 (8, 'Jefferson', 21, 'Vendedor'),
@@ -107,7 +107,7 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
