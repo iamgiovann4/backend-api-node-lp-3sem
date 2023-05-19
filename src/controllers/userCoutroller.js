@@ -59,6 +59,7 @@ export const createUser = (req, res) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
+      delete user.age
       res.json({
         message: "Usuário Cadastrado!",
         user: {
@@ -152,6 +153,7 @@ export const updateUser = (req, res) => {
     })
     return
   }
+  
   const userValidated = validUser.data
   // verifica se o usuário é um admin ou se o id do user da sessão é igual ao do user para deletar
   if (!rolesUserLogged.includes('admin')) {

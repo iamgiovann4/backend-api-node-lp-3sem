@@ -36,7 +36,8 @@ export const validateUser = (user) => {
 }
 
 export const validateUserToUpdate = (user) => {
-  return userSchema.safeParse(user)
+  const partialUserSchema = userSchema.partial({ id: true });
+  return partialUserSchema.safeParse(user)
 }
 
 export const listAllUsers = (callback) => {
