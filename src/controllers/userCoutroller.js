@@ -17,6 +17,16 @@ export const listAllUsers = (req, res) => {
 
 export const listId = (req, res) => {
   const idUser = req.params.id
+  if (!id || isNaN(id)) {
+    res.status(400).json({
+      message: 'Dados Inválidos',
+      fields: {
+        id: {message: ['ID deve ser um número inteiro.']}
+      }
+    })
+    return
+  }
+
   userModel.listId(idUser, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
@@ -32,8 +42,8 @@ export const listId = (req, res) => {
 
 export const createUser = (req, res) => {
   const user = req.body
+  console.log(user)
   const validUser = userModel.validateUser(user)
-
   if (validUser?.error) {
     res.status(400).json({
       message: 'Dados inválidos',
@@ -43,7 +53,6 @@ export const createUser = (req, res) => {
   }
   
   const userValidated = validUser.data
-
   //TODO validar se o email já existe no banco antes de cadastrar
 
   userModel.createUser(userValidated, (error, result) => {
@@ -63,7 +72,26 @@ export const createUser = (req, res) => {
 
 export const deleteUser = (req, res) => {
   const { id } = req.body
-  //TODO Verificar se os dados são válidos
+  const idUserLogged = req.idUserLogged
+  const rolesUserLogged = req.rolesUserLogged
+  if (!id || isNan(id)) {
+    res.status(400).json({
+      message: 'Dados Inválidos',
+      fields: {
+        id: {message: ['ID deve ser um número inteiro.']}
+      }
+    })
+    return
+  }
+
+  //verifica se o usuário é um admin ou se o id do user da sessão é igual ao do user para deletar
+  if (!rolesUserLogged.includes('admin')) {
+    if (idUserLogged !== id) {
+      res.status(401).json({message: `Usuário não autorizado!`})
+      return
+    }
+  }
+
   userModel.deleteUser(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
@@ -79,7 +107,26 @@ export const deleteUser = (req, res) => {
 
 export const deleteId = (req, res) => {
   const { id } = req.params
-  //TODO Verificar se os dados são válidos
+  const idUserLogged = req.idUserLogged
+  const rolesUserLogged = req.rolesUserLogged
+  if (!id ||isNaN(id)) {
+    res.status(400).json({
+      message: 'Dados Inválidos',
+      fields: {
+        id: {message: ['ID deve ser um número inteiro.']}
+      }
+    })
+    return
+  }
+
+  //verifica se o usuário é um admin ou se o id do user da sessão é igual ao do user para deletar
+  if (!rolesUserLogged.includes('admin')) {
+    if (idUserLogged !== id) {
+      res.status(401).json({ message: `Usuário não autorizado!` })
+      return
+    }
+  }
+
   userModel.deleteUser(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
@@ -95,8 +142,26 @@ export const deleteId = (req, res) => {
 
 export const updateUser = (req, res) => {
   const user = req.body
-  //TODO Verificar se os dados são válidos
-  userModel.updateUser(user, (error, result) => {
+  const validUser = userModel.validateUserToUpdate(user)
+  const idUserLogged = req.idUserLogged
+  const rolesUserLogged = req.rolesUserLogged
+  if (validUser?.error) {
+    res.status(400).json({
+      message: 'Dados Inválidos',
+      fields: zodErrorFormat(validUser.error)
+    })
+    return
+  }
+  const userValidated = validUser.data
+  // verifica se o usuário é um admin ou se o id do user da sessão é igual ao do user para deletar
+  if (!rolesUserLogged.includes('admin')) {
+    if (idUserLogged !== user.id) {
+      res.status(401).json({ message: `Usuário não autorizado!` })
+      return
+    }
+  }
+
+  userModel.updateUser(userValidated, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
