@@ -1,5 +1,6 @@
 import con from '../db/dbConnection.js'
 import { z } from 'zod'
+import sha256 from '../helper/sha256.js'
 
 //TODO Testar regex com zod e ChatGPT
 
@@ -30,11 +31,16 @@ const userSchema = z.object({
 })
 
 export const validateUser = (user) => {
+  const partialUserSchema = userSchema.partial({ id: true });
+  return partialUserSchema.safeParse(user)
+}
+
+export const validateUserToUpdate = (user) => {
   return userSchema.safeParse(user)
 }
 
 export const listAllUsers = (callback) => {
-  const sql = "SELECT * FROM usuarios;"
+  const sql = "SELECT id, nome, age, office, roles FROM usuarios;"
   con.query(sql, (err, result) => {
     if (err) {
       callback(err, null)
@@ -46,7 +52,7 @@ export const listAllUsers = (callback) => {
 }
 
 export const listId = (idUser, callback) => {
-  const sql = "SELECT * FROM usuarios WHERE id = ?;"
+  const sql = "SELECT id, nome, age, office FROM usuarios WHERE id = ?;"
   const values = [idUser]
   con.query(sql, values, (err, result) => {
     if (err) {
@@ -65,7 +71,7 @@ export const createUser = (user, callback) => {
   // const sql = 'INSERT INTO cursos SET ?;'
   // const values = { nome, cargahoraria }
   const sql = 'INSERT INTO usuarios (nome, age, office) VALUES (?, ?, ?);'
-  const values = [nome, age, office]
+  const values = [nome, sha256(age), office]
 
   con.query(sql, values, (err, result) => {
     if (err) {
@@ -107,4 +113,17 @@ export const updateUser = (user, callback) => {
   })
 }
 
-export default { listAllUsers, listId, createUser, deleteUser, updateUser, validateUser }
+export const loginUser = (email, pass, callback) => {
+  const sql = 'SELECT * FROM users WHERE email = ? AND pass = ?;'
+  const value = [email, sha256(pass)]
+  con.query(sql, value, (err, result) => {
+    if (err) {
+      callback(err, null)
+      console.log(`DB Error: ${err.sqlMessage}`)
+    } else {
+      callback(null, result)
+    }
+  })
+}
+
+export default { listAllUsers, listId, createUser, deleteUser, updateUser, validateUser, validateUserToUpdate, loginUser }
