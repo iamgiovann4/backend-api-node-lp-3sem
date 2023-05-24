@@ -4,8 +4,8 @@ import {
   listId,
   createUser,
   deleteUser,
+  updateUser,
   deleteId,
-  updateUser
 } from '../controllers/userCoutroller.js'
 import authenticated from '../middlewares/authenticated.js'
 

@@ -17,23 +17,23 @@ const userSchema = z.object({
     })
       .min(3, { message: "Nome deve ter no mínimo 3 caracteres." })
       .max(100, { message: "Nome deve ter no máximo 100 caracteres." }),
-  age:
+  office:
     z.string({ 
-      required_error: "Idade é obrigatório.",
-      invalid_type_error: "Idade deve ser um número"
-    })
-      .min(1, { message: "Idade deve ter no mínimo 1 caracteres" })
-      .max(256, { message: "Idade deve ter no máximo 256 caracteres." }),
-  office: 
-    z.string({
       required_error: "Profissão é obrigatório.",
-      invalid_type_error: "Profissão deve ser uma string."
+      invalid_type_error: "Profissão deve ser um número"
     })
-      .min(4, { message: "Profissão deve ter no mínimo 4 caracteres"})
-      .max(50, { message: "Profissão deve ter no máximo 50 caracteres."})
+      .min(4, { message: "Profissão deve ter no mínimo 4 caracteres" })
+      .max(50, { message: "Idade deve ter no máximo 50 caracteres." }),
+  age: 
+    z.string({
+      required_error: "Idade é obrigatório.",
+      invalid_type_error: "Idade deve ser uma string."
+    })
+      .min(2, { message: "Idade deve ter no mínimo 2 caracteres"})
+      .max(256, { message: "Idade deve ter no máximo 256 caracteres."})
 })
 
-export const validateUser = (user) => {
+export const validateUserToCreate = (user) => {
   const partialUserSchema = userSchema.partial({ id: true });
   return partialUserSchema.safeParse(user)
 }
@@ -55,9 +55,9 @@ export const listAllUsers = (callback) => {
   })
 }
 
-export const listId = (idUser, callback) => {
+export const listId = (id, callback) => {
   const sql = "SELECT id, nome, office, roles FROM usuarios WHERE id = ?;"
-  const values = [idUser]
+  const values = [id]
   con.query(sql, values, (err, result) => {
     if (err) {
       callback(err, null) //a funcao callback é obg a passar 2 parametros
@@ -69,11 +69,11 @@ export const listId = (idUser, callback) => {
 }
 
 export const createUser = (user, callback) => {
-  const { nome, age, office } = user
+  const { nome, office, age } = user
   // const sql = 'INSERT INTO cursos SET ?;'
   // const values = { nome, cargahoraria }
-  const sql = 'INSERT INTO usuarios (nome, age, office) VALUES (?, ?, ?);'
-  const values = [nome, sha256(age), office]
+  const sql = 'INSERT INTO usuarios (nome, office, age) VALUES (?, ?, ?);'
+  const values = [nome, office, sha256(age)]
 
   con.query(sql, values, (err, result) => {
     if (err) {
@@ -128,4 +128,4 @@ export const loginUser = (office, age, callback) => {
   })
 }
 
-export default { listAllUsers, listId, createUser, deleteUser, updateUser, validateUser, validateUserToUpdate, loginUser }
+export default { listAllUsers, listId, createUser, deleteUser, updateUser, validateUserToCreate, validateUserToUpdate, loginUser }

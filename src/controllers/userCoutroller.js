@@ -16,8 +16,8 @@ export const listAllUsers = (req, res) => {
 }
 
 export const listId = (req, res) => {
-  const idUser = req.params.id
-  if (!id || isNaN(id)) {
+  const id = req.params.id
+  if (!id|| isNaN(id)) {
     res.status(400).json({
       message: 'Dados Inválidos',
       fields: {
@@ -27,7 +27,7 @@ export const listId = (req, res) => {
     return
   }
 
-  userModel.listId(idUser, (error, result) => {
+  userModel.listId(id, (error, result) => {
     if (error)
       res.status(500).json({ message: "Erro no Banco de Dados" })
     if (result) {
@@ -43,7 +43,7 @@ export const listId = (req, res) => {
 export const createUser = (req, res) => {
   const user = req.body
   console.log(user)
-  const validUser = userModel.validateUser(user)
+  const validUser = userModel.validateUserToCreate(user)
   if (validUser?.error) {
     res.status(400).json({
       message: 'Dados inválidos',
