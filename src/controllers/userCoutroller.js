@@ -75,7 +75,7 @@ export const deleteUser = (req, res) => {
   const { id } = req.body
   const idUserLogged = req.idUserLogged
   const rolesUserLogged = req.rolesUserLogged
-  if (!id || isNan(id)) {
+  if (!id || isNaN(id)) {
     res.status(400).json({
       message: 'Dados Inválidos',
       fields: {
@@ -110,7 +110,7 @@ export const deleteId = (req, res) => {
   const { id } = req.params
   const idUserLogged = req.idUserLogged
   const rolesUserLogged = req.rolesUserLogged
-  if (!id ||isNaN(id)) {
+  if (!id || isNaN(id)) {
     res.status(400).json({
       message: 'Dados Inválidos',
       fields: {
@@ -155,6 +155,7 @@ export const updateUser = (req, res) => {
   }
   
   const userValidated = validUser.data
+  
   // verifica se o usuário é um admin ou se o id do user da sessão é igual ao do user para deletar
   if (!rolesUserLogged.includes('admin')) {
     if (idUserLogged !== user.id) {

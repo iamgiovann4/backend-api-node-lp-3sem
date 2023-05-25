@@ -88,9 +88,9 @@ export const createUser = (user, callback) => {
 export const deleteUser = (id, callback) => {
   // const id  = user
   const sql = 'DELETE FROM usuarios WHERE id = ?;'
-  const values = [id]
+  const value = [id]
 
-  con.query(sql, values, (err, result) => {
+  con.query(sql, value, (err, result) => {
     if (err) {
       callback(err, null)
       console.log(`DB Error: ${err.sqlMessage}`)
